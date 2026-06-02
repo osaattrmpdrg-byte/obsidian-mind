@@ -1,7 +1,7 @@
 {
   "template": "obsidian-mind",
-  "version": "6.1.0",
-  "released": "2026-05-18",
+  "version": "6.2.0",
+  "released": "2026-06-02",
   "qmd_index": "obsidian-mind",
   "qmd_context": "Engineer's work vault built on obsidian-mind. Active projects and archive, 1:1 notes, incidents, brag log with quarterly evidence, competency map, people and teams, decisions and patterns in brain/, reference docs and runbooks. Multi-agent (Claude Code, Codex, Gemini) with lifecycle hooks and QMD semantic search. Ground for 'what did I ship?' reviews, project status, and personal knowledge management.",
   "infrastructure": [
@@ -164,6 +164,14 @@
         ".shardmindignore",
         ".shardmind/shard-schema.yaml",
         ".shardmind/shard.yaml"
+      ],
+      "missing": [
+        ".shardmind/hooks/personalize.ts"
+      ]
+    },
+    "v6.2": {
+      "exists": [
+        ".shardmind/hooks/personalize.ts"
       ]
     }
   },
