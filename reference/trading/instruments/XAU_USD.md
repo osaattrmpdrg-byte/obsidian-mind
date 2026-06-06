@@ -89,6 +89,7 @@ Risk/lot (Gold Mini 10g): ₹1,670
 
 ## Related
 
+- [[2026-06-05 - gold xau trading signals]] — source signal research
 - [[Trading System]] — full system context
 - [[BTC_USD]] — crypto instrument (different execution path)
 - [[What Didn't Work]] — XAU/USD short direction rejected (adj = -0.061R)

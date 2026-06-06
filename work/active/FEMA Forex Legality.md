@@ -117,6 +117,7 @@ This makes EUR/USD potentially the **most capital-accessible live instrument** o
 
 ## Related
 
+- [[2026-06-05 - is it legal in 2026 for a resident individual in india to trade eurusd gbpusd us]] — source research this verdict rests on
 - [[Trading System]] — EUR/USD + USD/CAD currently disabled here; update if CA confirms
 - [[What Didn't Work]] — forex "category closed" conclusion is conditional on this note's outcome
 - [[XAU_USD]] — same Angel One execution path; currency segment vs MCX
