@@ -33,15 +33,18 @@ type HookInput = {
 const input = await readStdinJson<HookInput>();
 if (input?.stop_hook_active === true) process.exit(0);
 
-const checklist = [
-	"Session end checklist:",
-	"- Archive completed projects? (work/active/ -> work/archive/YYYY/)",
-	"- Update indexes? (Index.md, Memories.md, People & Context, Brag Doc)",
-	"- New notes linked? (orphans are bugs)",
-	"- Run /om-vault-audit if many notes were created/modified",
+const today = new Date().toISOString().slice(0, 10);
+const logPath = `thinking/session-logs/${today}-session.md`;
+
+const mandate = [
+	`MANDATORY — CAPTURE THIS SESSION BEFORE ENDING:`,
+	`Run the /log-session routine (it defines the full structure): write or append`,
+	`${logPath}, update brain/Memories.md Recent Context, and route any durable`,
+	`knowledge to the right brain note. Do NOT auto-push git — that's the user's call.`,
+	`For a full vault review instead, run /om-wrap-up.`,
 ].join("\n");
 
-process.stdout.write(checklist + "\n");
+process.stdout.write(mandate + "\n");
 
 triggerDebouncedRefresh({
 	sentinelPath: SENTINEL_PATH,

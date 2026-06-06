@@ -3,6 +3,17 @@
     "qmd": {
       "command": "node",
       "args": [".claude/scripts/qmd-mcp.mjs"]
+    },
+    "obsidian": {
+      "type": "http",
+      "url": "https://127.0.0.1:27124/mcp/",
+      "headers": {
+        "Authorization": "Bearer 044b018d622a9eaf5a9e304f8fb50edc7fbd143244e0976d3f0eabfdca9958e0"
+      }
+    },
+    "coingecko": {
+      "type": "http",
+      "url": "https://mcp.api.coingecko.com/mcp"
     }
   }
 }
