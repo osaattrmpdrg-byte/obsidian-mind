@@ -7,6 +7,9 @@ tags: [reference, research, framework]
 ## For future Claude
 This is the governing framework for API credit decisions. Read this before deciding whether to call Perplexity, Gemini, or use vault knowledge. The core rule: never be cheap on information that is in the critical path of a trade. Every other API call should be scrutinized.
 
+> [!tip] Operational layer
+> This note is the *source of truth* for the tier logic. The `api-usage` skill operationalizes it — it gates each call against these tiers, logs the decision to `brain/api-ledger.jsonl`, and audits spend + ROI drift. See [[Skills#Operational Skills (Skill tool, not slash commands)]].
+
 ---
 
 ## The Governing Rule
@@ -17,6 +20,9 @@ This is the governing framework for API credit decisions. Read this before decid
 - If no → check vault first
 
 A bad trade from stale data costs 100x more than one Perplexity call. Never optimize the wrong thing.
+
+> [!info] Subscription-side constraint
+> This framework governs *external API* spend (Perplexity, Gemini, etc.). For *Claude's own* token economics — the separate interactive vs Agent SDK credit pools, and why autonomous Claude work has its own monthly ceiling — see [[Claude Subscription Billing]]. Pro = $20/mo for all non-interactive Claude usage.
 
 ---
 

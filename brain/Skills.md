@@ -20,6 +20,13 @@ Custom slash commands, subagents, and reusable workflows. Defined in `.claude/co
 | `/om-dump` | Freeform capture — dump anything, gets routed to the right notes automatically |
 | `/om-wrap-up` | Full session review — verify notes, indexes, links, suggest improvements. Auto-triggered on "wrap up". |
 
+### Research & Trading
+
+| Command | Purpose |
+|---------|---------|
+| `/finance` | Pre-trade brief via Perplexity Finance Search — live level, macro catalysts, technical context, risk flags. Tier-1 tactical; self-logs to the `api-usage` ledger. The qualitative CONTEXT layer broker feeds don't carry. Saves to `Research/Finance/`. |
+| `/trading-research` | Routes strategy questions to vault-first knowledge; Perplexity only on a genuine gap or tactical query |
+
 ### Editing & Synthesis
 
 | Command | Purpose |
@@ -116,6 +123,20 @@ If QMD is installed (`npm install -g @tobilu/qmd`), the vault has semantic searc
 - `qmd --index <name> update && qmd --index <name> embed` — refresh index after bulk changes
 
 SessionStart hook runs `qmd --index <name> update` automatically, reading the index name from the manifest. First-time setup on a fresh clone: `node --experimental-strip-types scripts/qmd-bootstrap.ts`. See `.claude/skills/qmd/SKILL.md` for full reference, and [[Memories]] for the topics QMD is most often asked to find across the vault.
+
+## Operational Skills (Skill tool, not slash commands)
+
+Loaded automatically by Claude's skill discovery from `.claude/skills/`.
+
+| Skill | Purpose | Triggers |
+|-------|---------|----------|
+| `api-usage` | Gate + audit for paid API spend (Perplexity / Grok / Gemini). Classifies each query against the [[api-decision-framework]] Tier 1/2/3 tree (verdict: PAY / VAULT-FIRST / CLAUDE-ONLY), logs the decision to `brain/api-ledger.jsonl`, and audits spend + ROI drift on demand. | Before any paid call; "audit api usage" |
+
+**api-usage mechanics:**
+- Gate logs via `python .claude/skills/api-usage/scripts/audit.py record --provider <p> --query "..." --verdict <pay|vault-first|claude-only> --tier <1|2|3>`
+- Audit via `python .claude/skills/api-usage/scripts/audit.py audit [--save]` — per-provider cost + **WASTED SPEND** / **UNTRACKED CALLS** drift flags
+- Ledger is append-only JSONL (created on first `record`); audit notes land in `brain/api-audits/`
+- Tests: `cd .claude/skills/api-usage/scripts && python -m unittest` (stdlib, no pytest)
 
 ## Workflow: Weekly Review
 

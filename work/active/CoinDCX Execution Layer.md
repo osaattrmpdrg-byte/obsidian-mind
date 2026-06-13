@@ -51,13 +51,38 @@ Source: A1 research via Perplexity Sonar → saved to `Research\Web\`
   - [x] 13-test offline suite `test_coindcx_client.py` — all green
 - [x] Empirically test rate limits with a minimal read call (balances endpoint) *(✅ 2026-06-12 — `smoke_coindcx.py` all green: auth OK, BTCUSDT min_quantity=1e-05 precision=5, below-min guard works. Balances: ~0.00027 BTC, 0.031 ETH, 1.14 USDT)*
 - [x] Limit-order support added to client *(2026-06-12 — `price_per_unit` param, TDD, 16 tests green; enables zero-fill-risk order/cancel verification)*
+- [x] Fix scientific-notation serialization for small quantities *(✅ 2026-06-13 — `_plain_decimal` + `_signed_post(number_fields=)`, plain JSON numbers; regression test, 17 tests green)*
+- [x] Mirror client into version control *(✅ 2026-06-13 — committed to `life-os/crypto_trading/` (`ca34986`) + `.gitignore` for `.env`; push pending user's terminal — interactive credential prompt)*
 - [ ] Wire into scanner flow: signal fire → [[Signal Matrix]] check → user taps → `place_spot_order()` *(Phase 2 — Telegram bot in `D:\trading_system\bot\execution.py`)*
 - [x] Test end-to-end in simulation before any live capital *(offline: mocked HTTP, all paths covered)*
 
 ### Verification
 - [x] Place a test order below minimum size → clean rejection *(unit-tested + asserted no network call)*
-- [ ] Place a valid test order → appears in CoinDCX Open Orders UI *(ready: unfillable limit buy, 1e-05 BTC @ $40k ≈ $0.40 — needs explicit user go-ahead, permission-gated 2026-06-12)*
-- [ ] Cancel via API → disappears from Open Orders *(runs immediately after the above)*
+- [ ] Place a valid test order → appears in CoinDCX Open Orders UI *(❌ BLOCKED — 400, CoinDCX-side; see below)*
+- [ ] Cancel via API → disappears from Open Orders *(blocked — depends on the above)*
+
+---
+
+## ⚠️ Order placement returns 400 — root cause is CoinDCX-side, not our code (2026-06-12 / 13)
+
+**Symptom:** every `place_spot_order` returns `HTTP 400 {"code":400,"message":"Invalid request"}`, identical across all variations (sell limit at +1.5%, +10%, +89% from market; qty 0.0001 and 0.00005; floats and strings; with and without `ecode`).
+
+> [!warning] The earlier "read-only key" diagnosis was WRONG — corrected
+> The first guess (key lacks Trading scope) was disproven by the dashboard screenshot: the key has **Place Limit Orders + Place Market Orders + Funds Balance + Account Details** all enabled, and IP `152.57.33.190` is whitelisted. Lesson: "uniform failure ⇒ permission issue" was a bad inference — uniformity *also* fits a constant-wrong-field or an account-side block, which is what it turned out to be.
+
+**Systematically ruled out** (all via safe, rejected live attempts — no order ever created):
+- Auth/HMAC ✓ (balances works) · trade permission ✓ (screenshot) · IP whitelist ✓
+- Market identifier ✓ — `"BTCUSDT"` is correct: pair form `"B-BTC_USDT"` gives a *different* error (`422 Currency pair is not valid`), proving `BTCUSDT` is accepted and the 400 is **not** about the market
+- Clock skew ✓ (0.6 s) · strings ✗ · floats ✗ · `ecode:"B"` ✗ · quantity size ✗ · **price-band ✗** (even +1.5% fails)
+- **Our code matches the working reference lib (`svamja/coindcx-python`) verbatim** — identical body dict, `json.dumps(separators=(',',':'))`, HMAC signing, headers, market-as-is, numeric quantities. No mechanical difference remains.
+
+**Conclusion:** not resolvable from our side. Leading explanations, both CoinDCX-side: (a) the **`B`-ecode (Binance-mirrored) USDT market may not be REST-orderable** for this account via `/exchange/v1/orders/create` despite `status:active`; or (b) an **account-level API-trading activation** beyond the key permission. **Next step = CoinDCX API support**, quoting the exact payload + 400, asking whether BTCUSDT (ecode B) spot is REST-orderable for this account. No more blind attempts. Not on the critical path (BTC paper phase).
+
+## ✅ Scientific-notation serialization bug — FIXED (2026-06-13, TDD)
+
+Confirmed and fixed: `json.dumps(0.00005)` → `"5e-05"`, which CoinDCX rejects. Bites any quantity below 0.0001 — *including the real 1e-05 minimum and any min-notional order* (~8.6e-05 BTC at $64k). The original 13 tests missed it (used 0.0012-size quantities). Fix in `coindcx_client.py`: `_plain_decimal()` + `_signed_post(number_fields=...)` emit `total_quantity`/`price_per_unit` as plain non-scientific **JSON numbers** (matching the reference lib's numeric contract) via placeholder injection. Regression test `test_small_quantity_not_scientific_notation`; **17 tests green**, smoke still passes. Independent of the 400 above — would have bitten once the 400 is resolved.
+
+**Client status:** read path verified live; order construction matches the working reference and is now scientific-notation-safe. Order/cancel remain **unverified live**, blocked by the CoinDCX-side 400 — not by our code.
 
 ---
 

@@ -69,3 +69,14 @@ These are never queued. Run immediately when needed before a trade:
 - Breaking news affecting open positions
 
 See [[api-decision-framework]] — Tier 1, always spend.
+
+---
+
+## Parked — Phase 2 (do NOT run until the simple version is live)
+
+- [ ] **Multi-indicator confidence scoring** *(parked 2026-06-13)*
+  Idea: require N-of-M confirming indicators above a confidence threshold before a trade qualifies, and grade conviction for position sizing.
+  **Why parked, not rejected:** the *naive* form is a known trap — see [[What Didn't Work#Daily Strategy Generator (2026-06-06)]]. Most TA indicators are derived from the same price + moving averages, so "5 indicators agreeing" is one signal wearing five hats (correlated votes ≈ 1× confidence, not 5×), and inventing a "75%" threshold violates the hard rule *"never propose scoring weights without backtest calibration."*
+  **The only honest path to un-park it:** test confirming filters **one at a time** through the [[Daily Watch Weekly Hunt]] rail — rationale-first → does it beat the bare breakout (adj R + Wilson CI, train AND test) *net of trades removed* → never-touched lockbox → trial-count penalty. A filter earns a place in the [[Signal Matrix]] confidence score only after surviving that gate.
+  **Un-park trigger:** simple version live (paper gate cleared, see [[Trading System#Path to Live]]) AND a confirming filter has a one-sentence edge worth testing.
+  **First scan run (2026-06-13):** tested 4 filters one-at-a-time on EUR/USD + XAU (overextension guard, higher-TF alignment, ADX>25, volume). Result: most failed (overextension *destroyed* XAU test, −0.557R; HTF/volume mixed); ADX>25 looked best under a fixed-TP exit but **the whole experiment hit a wall** — the bare baseline doesn't reproduce the vault's proven numbers under the live exit (see [[Gotchas#Backtest reproducibility]]), so no filter can be honestly judged yet. **The indicator question is blocked on baseline reconciliation, not on filter choice.**

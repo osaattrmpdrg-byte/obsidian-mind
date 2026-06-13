@@ -49,11 +49,11 @@ tags:
 
 ## Stream 3 — Content (Faceless)
 
-**Status:** Idea only. Not started.
-**Constraints:** No face, no voice. Views/algorithm-based income. Not trading-related.
-**Niche:** Not yet defined — this is the first decision needed before anything else
-**Next action:** Define one niche hypothesis. Apply edge-before-action rule — WHY would this niche generate sustainable views?
-**Claude's role:** Surface non-obvious niche angles. Avoid generic "pick a trending topic" advice.
+**Status:** Niche **hypothesis defined** 2026-06-13 — see [[Content Niche]].
+**Constraints:** No face, no voice, views/algorithm-based — all satisfiable. **"Not trading-related" is in tension** with the proposed edge; proposed revision → *"not trading-**advice**; the trading **system** is fair game as engineering proof."* Pending user confirmation.
+**Niche hypothesis (Framing C, recommended):** AI-engineering / personal-agent-OS build-in-public, with the real-money trading system as recurring credibility proof (engineering, never signals). Edge: *"I built the AI second-brain these creators teach, then pointed it at a live trading account with the risk discipline the hype skips."*
+**Next action:** Confirm the constraint revision → ship ONE artifact (the drafted lockbox post) → measure traction over ~2 weeks (falsifiable test). See [[Content Niche]].
+**Claude's role:** Keep it engineering-framed, not finance-advice (SEBI/advisory + liability). Don't drift to generic "trending topic" advice.
 
 ---
 

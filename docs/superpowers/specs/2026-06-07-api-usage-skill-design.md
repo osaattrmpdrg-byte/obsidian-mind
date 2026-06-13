@@ -10,7 +10,7 @@ status: accepted
 # Design: `api-usage` skill
 
 **Date:** 2026-06-07
-**Status:** Approved (design)
+**Status:** Implemented 2026-06-13 — `.claude/skills/api-usage/` (SKILL.md + `scripts/audit.py`, 10 stdlib unittest cases). `record` subcommand added for safe ledger appends.
 **Author:** Dileep + Claude
 
 ## Problem

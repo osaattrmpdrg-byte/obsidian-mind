@@ -26,6 +26,9 @@ Read by Claude at session start. Updated when signals are added, validated, or r
 
 **Minimum bar:** Wilson CI lower bound > 33.3% (break-even for 1:2 R:R) in BOTH train AND test. Not just positive expectancy.
 
+> [!warning] Live exit diverges from the validated exit (2026-06-13) — fix before live capital
+> EUR/USD +0.131R is **real** — saved in `results\breakout_trail5_portfolio.csv` (n=92, 54.3% WR), produced by a **pure 5-bar trailing stop, NO fixed TP** (winners ran to +5.36R). But the live `monitor_trades.py` exits SL > **TP(+2.0R)** > trail — the TP cap chops the right-tail winners and collapses the edge (reconstruction with TP = −0.278R). **XAU +0.278R has no saved artifact at all** — unverifiable until re-derived. The validation script is lost (`trading_system` isn't under git). See [[Gotchas#Backtest reproducibility & live-exit divergence]].
+
 ---
 
 ## Signal Logic (all instruments)

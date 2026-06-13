@@ -7,6 +7,9 @@ tags:
   - automation
 status: proposed
 quarter: Q2-2026
+aliases:
+  - Tooling Intelligence Scan
+  - Tooling Intelligence Scan — Design
 ---
 
 # Tooling Intelligence Scan — Design
