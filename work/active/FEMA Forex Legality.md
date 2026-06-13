@@ -109,6 +109,7 @@ This makes EUR/USD potentially the **most capital-accessible live instrument** o
 | 2026-06-05 | Note created | Reasoning hypothesis-stage. |
 | 2026-06-05 | **Legality VERIFIED** | Research confirmed SEBI 2016 circular still in force. EUR/USD legal on NSE. |
 | 2026-06-05 | **GO — CA waived** | Decision: proceed with EUR/USD. CA consultation waived as disproportionate at current scale (1 lot, ~18 trades/yr, tiny tax stakes, legality already verified). Downside of skipping = small/known/reversible (worst case: file ITR-3, report broker P&L; far below 44AB audit threshold). **Revisit CA when scaling up** (multiple lots / salary converted / new instruments). EUR/USD moves DISABLED → PENDING (paper-trade gate still required before live). |
+| 2026-06-12 | **EXECUTED** | Scanner re-enabled for EUR/USD (PAIRS in `scanner.py`), NSE futures sizing block added to alerts, FX callback precision fixed, brief memory de-staled. Committed in life-os repo — push pending user. See [[Trading System]] for the remaining path (segment activation → paper → live). |
 
 > [!info] CA revisit trigger
 > Re-book the CA when trading materially bigger — multiple lots, post-salary-conversion capital, or adding instruments. At that point the business-income tax mechanics (audit threshold, ITR-3 bookkeeping, salary interaction) start to matter. Not now.

@@ -39,9 +39,9 @@ Source: A1 research via Perplexity Sonar → saved to `Research\Web\`
 ## Build Checklist
 
 ### Pre-build (account setup)
-- [ ] Confirm CoinDCX KYC is complete and API trading is enabled
-- [ ] Generate API key: CoinDCX dashboard → Settings → API → Create key
-- [ ] Store key + secret in `D:\crypto_trading\.env` (never hardcode)
+- [x] Confirm CoinDCX KYC is complete and API trading is enabled *(verified via live auth, 2026-06-12)*
+- [x] Generate API key: CoinDCX dashboard → Settings → API → Create key *(2026-06-12)*
+- [x] Store key + secret in `D:\crypto_trading\.env` *(2026-06-12 — user pasted into `.env.example`; moved to `.env`, example restored to placeholders, neither file git-tracked)*
 
 ### Implementation
 - [x] Create `D:\crypto_trading\coindcx_client.py` *(built test-first, 2026-06-05)*
@@ -49,14 +49,15 @@ Source: A1 research via Perplexity Sonar → saved to `Research\Web\`
   - [x] `get_market_details(symbol)` — fetch min order size dynamically
   - [x] `place_spot_order(symbol, side, quantity, order_type="market_order")` function
   - [x] 13-test offline suite `test_coindcx_client.py` — all green
-- [ ] Empirically test rate limits with a minimal read call (balances endpoint) *(needs live key — `smoke_coindcx.py` ready)*
+- [x] Empirically test rate limits with a minimal read call (balances endpoint) *(✅ 2026-06-12 — `smoke_coindcx.py` all green: auth OK, BTCUSDT min_quantity=1e-05 precision=5, below-min guard works. Balances: ~0.00027 BTC, 0.031 ETH, 1.14 USDT)*
+- [x] Limit-order support added to client *(2026-06-12 — `price_per_unit` param, TDD, 16 tests green; enables zero-fill-risk order/cancel verification)*
 - [ ] Wire into scanner flow: signal fire → [[Signal Matrix]] check → user taps → `place_spot_order()` *(Phase 2 — Telegram bot in `D:\trading_system\bot\execution.py`)*
 - [x] Test end-to-end in simulation before any live capital *(offline: mocked HTTP, all paths covered)*
 
 ### Verification
 - [x] Place a test order below minimum size → clean rejection *(unit-tested + asserted no network call)*
-- [ ] Place a valid test order → appears in CoinDCX Open Orders UI *(needs live key + funds)*
-- [ ] Cancel via API → disappears from Open Orders *(needs live key)*
+- [ ] Place a valid test order → appears in CoinDCX Open Orders UI *(ready: unfillable limit buy, 1e-05 BTC @ $40k ≈ $0.40 — needs explicit user go-ahead, permission-gated 2026-06-12)*
+- [ ] Cancel via API → disappears from Open Orders *(runs immediately after the above)*
 
 ---
 

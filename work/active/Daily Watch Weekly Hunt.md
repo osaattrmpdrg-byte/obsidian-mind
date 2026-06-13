@@ -52,9 +52,9 @@ New strategies are a *"nice problem to have" — after* the proven edge is earni
 
 - [ ] Daily Watch brief format + where it lands (Telegram? daily note? vault brief?)
 - [ ] Wire Daily Watch cadence (candidate: `/schedule` daily, or extend existing GitHub Actions)
-- [ ] Implement the Lockbox: carve a held-out data slice in `D:\crypto_trading` / `D:\trading_system` that backtests never touch — via `/plan` → `/code-review`
-- [ ] Implement the trial-count register (N + bar-raising rule)
-- [ ] Define cross-instrument confirmation harness (run candidate on BTC + XAU + EUR/USD)
+- [x] Implement the Lockbox ✅ 2026-06-12 — `D:\trading_system\hunt\lockbox.py`: held-out slice from **2024-01-01**; `train_slice()` is the only sanctioned research entry point
+- [x] Implement the trial-count register ✅ 2026-06-12 — `D:\trading_system\hunt\registry.py`: rationale required at registration, N counts every candidate ever (rejects included), Bonferroni-raised Wilson bar (`required_z(N)`), one lockbox shot per candidate, 6 shots/yr cap, weak train results auto-reject and still count toward N. TDD: 18 tests green (`test_hunt.py`). Plan: `docs/superpowers/plans/2026-06-12-lockbox-trial-registry.md`. Committed to life-os (`90ac32c`).
+- [ ] Define cross-instrument confirmation harness (run candidate on BTC + XAU + EUR/USD) — registry already records it (`record_cross_instrument`), the runner that produces the per-instrument results is what's missing
 - [ ] First Hunt candidate: pull from [[Research Queue]] Run 1 (broad strategy scan)
 
 ## Related

@@ -33,7 +33,7 @@ tags:
 **Active instruments:**
 - BTC/USD — regime NONE (EMA50 < EMA200). Scanner 00:30 UTC. Waiting for flip.
 - XAU/USD (MCX Gold) — scanner 22:30 UTC. No signals fired yet. Execution via Angel One SmartAPI.
-- EUR/USD — **GO** (legal via NSE futures, verified 2026-06-05). Cheapest instrument (~₹2,700/lot). Re-enablement pending Angel One currency segment. See [[FEMA Forex Legality]].
+- EUR/USD — **GO** (legal via NSE futures, verified 2026-06-05). Cheapest instrument (~₹2,700/lot). **Scanner re-enabled 2026-06-12** with NSE sizing block on alerts (deploy = push life-os). Execution still pending Angel One currency segment. See [[FEMA Forex Legality]].
 **Disabled:** USD/CAD — not listed on NSE cross-currency, no India-legal route.
 **Execution layer:** Telegram approval bot built (`D:/trading_system/bot/`). Sends inline keyboard on signal. Runs two-layer pre-trade validation (circuit breakers → Perplexity). Angel One SmartAPI stub ready — fills when key arrives.
 **Broker for automation:** Angel One (free SmartAPI, better docs than Finvasia, ₹20/trade flat — beats KiteConnect at ₹2,000/month)

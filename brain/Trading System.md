@@ -18,11 +18,10 @@ Read by Claude at session start. Updated when signals are added, validated, or r
 
 | Pair | Direction | WR | Adj R | n | Status |
 |---|---|---|---|---|---|
-| EUR/USD | Long | 54.3% (20yr) / 67.7% (test) | +0.131R | 92 | SIG train+test — **DISABLED** (India legal) |
-| USD/CAD | Short | — | +0.054R | — | SIG train+test — **DISABLED** (India legal) |
+| EUR/USD | Long | 54.3% (20yr) / 67.7% (test) | +0.131R | 92 | SIG train+test — **SCANNER ACTIVE** (re-enabled 2026-06-12, NSE futures path, paper gate before live) |
+| USD/CAD | Short | — | +0.054R | — | SIG train+test — **PERMANENTLY BLOCKED** (not on NSE cross-currency) |
 | XAU/USD | Long | 46.6% | +0.278R | 206 | SIG train+test — **ACTIVE** (scanner live) |
 | BTC/USD | Long | 51.7% full / 40% test | +0.452R | 116 | SIG full, borderline test — **PAPER TRADING** |
-| EUR/USD | Long | 54.3% (20yr) / 67.7% (test) | +0.131R | 92 | SIG train+test — **GO via NSE futures** (legal cleared 2026-06-05, paper-trade gate pending) |
 | ETH/USD | Long | 47.4% | +0.321R | 57 | NOT SIG in test — **PHASE 2, deferred** |
 
 **Minimum bar:** Wilson CI lower bound > 33.3% (break-even for 1:2 R:R) in BOTH train AND test. Not just positive expectancy.
@@ -44,8 +43,8 @@ Read by Claude at session start. Updated when signals are added, validated, or r
 | Instrument | Regime | Scanner | Notes |
 |---|---|---|---|
 | BTC/USD | NONE — EMA50 $76.8k < EMA200 $81.7k | GitHub Actions 00:30 UTC | Waiting for flip |
-| XAU/USD | Live | GitHub Actions 22:30 UTC | No signals fired yet. Execution via **Angel One SmartAPI** (account created 2026-06-05). |
-| EUR/USD | — | **Re-enabling** | Legal via NSE EUR/USD futures (~₹2,700/lot, INR-settled). See [[FEMA Forex Legality]]. Build NSE execution path → paper trade → live. |
+| XAU/USD | NONE (as of 2026-06-11) | GitHub Actions 22:30 UTC | No signals fired yet. Execution via **Angel One SmartAPI** (account created 2026-06-05). |
+| EUR/USD | SHORT regime (as of 2026-06-11) — long signal needs flip | **Re-enabled 2026-06-12** (deploy pending `git push` of life-os) | Legal via NSE EUR/USD futures. See [[FEMA Forex Legality]]. Alerts now carry NSE sizing block (lot margin, risk/lot ₹, IST hours). Paper trade → live. |
 | USD/CAD | — | Disabled | Not listed on NSE cross-currency. Permanently blocked — no India-legal route. |
 
 ---
@@ -88,21 +87,27 @@ GitHub repo: `osaattrmpdrg-byte/life-os` (private) — scanner + monitor run via
 
 ## Pending Next Steps (priority order)
 
-1. **Angel One API key** — account CREATED (2026-06-05). Next: generate SmartAPI key from smartapi.angelbroking.com (create a "Trading API" app), enable TOTP, activate MCX + currency segments. Add key to `D:\trading_system\.env` as `ANGEL_ONE_API_KEY`. Uncomment SmartConnect block in `bot/execution.py`. Free API.
-2. **Add Perplexity key to trading_system .env** — `D:\trading_system\.env` has `PERPLEXITY_API_KEY=` placeholder. Fill it. Then `bot/validation.py` Layer 2 activates.
-3. **Deploy bot to Cloud Run** — see `D:\trading_system\docs\deploy.md`. Run: `gcloud run deploy trading-bot --source . --region asia-south1 --min-instances 1`. $300 GCP credits expire 2026-09-04.
-4. **Run the bot locally first** — `python -m bot.handler` + `python scanner.py` — verify keyboard appears in Telegram, Validate tap works.
+1. ~~Angel One API key~~ ✅ VERIFIED 2026-06-12 — key + client code + PIN + TOTP secret all in `.env`, `test_angel_login.py` passes: **MCX active, currency derivatives active**. Both execution segments unlocked.
+2. ~~Perplexity key~~ ✅ Already set in `.env` — Layer 2 live-tested 2026-06-12 (correctly returned NO GO on a fake test signal).
+3. ~~Run the bot locally first~~ ✅ END-TO-END VERIFIED 2026-06-12 — test signal → keyboard → Validate tap → circuit breakers → Perplexity → verdict → message edit. Full pipeline works.
+4. **⚠️ WIRE LIVE ORDER PLACEMENT — `bot/execution.py` SmartConnect block (DO NOT FORGET)**
+   - **Trigger: when the paper gate reaches 5-6 logged trades** (Path to Live Phase 4). One-session job.
+   - What's stubbed: `place_order()` returns "not wired up" when key is set. Wire: `generateSession(CLIENT_CODE, PIN, pyotp.TOTP(TOTP_SECRET).now())` — note .env names are `ANGEL_ONE_PIN`/`ANGEL_ONE_TOTP_SECRET`, NOT the `PASSWORD`/`TOTP` names in the stub's comment.
+   - Needs: `searchScrip` for front-month symboltoken (MCX gold AND NSE EUR/USD `cde_fo`), branch by instrument, SL order placement. Stub's `stoploss`/`squareoff` params are ignored on variety NORMAL — needs separate SL order or ROBO variety check.
+   - Start 1 lot, 1-2% risk, **EUR/USD first** (cheapest lot).
+5. **Deploy bot to Cloud Run** — see `D:\trading_system\docs\deploy.md`. Run: `gcloud run deploy trading-bot --source . --region asia-south1 --min-instances 1`. $300 GCP credits expire 2026-09-04.
 5. **Bake breakout signal into scorer.py + engine.py** — currently validated separately in validate_breakout.py
 3. **Position sizing calculator** — given capital + risk% → expected annual return output (research pending — see [[Trading Research Queue]] A3)
 4. **short_agent.py** — EMA50 rejection logic (not RSI inversion — different entry)
 5. ~~Instrument expansion — EUR/JPY, GBP/JPY, NZD/USD~~ ❌ All rejected (B1-B2, see [[What Didn't Work]]). Forex expansion closed except EUR/USD below.
 
-### EUR/USD re-enablement (GO — legal cleared 2026-06-05)
-1. Activate **currency derivatives segment** (not just MCX) — account created 2026-06-05
-2. Verify scanner's EUR/USD daily-close source matches NSE futures behaviour (spot vs INR-settled futures, 9-5 IST hours) — cheap check, do before trusting fills
-3. Re-point execution: NSE EUR/USD futures (1,000 EUR lot, ~₹2,700 margin) via Angel One currency segment
-4. **Paper trade through live pipeline** before any real capital (own hard rule — backtest SIG ≠ live edge)
-5. Then live. Most capital-accessible instrument in the system (~₹2,700/lot vs ₹70k gold).
+### EUR/USD re-enablement (GO — legal cleared 2026-06-05, scanner re-enabled 2026-06-12)
+1. Activate **currency derivatives segment** (not just MCX) — account created 2026-06-05 *(user action)*
+2. ~~Re-point scanner to EUR/USD~~ ✅ 2026-06-12 — PAIRS re-enabled, NSE sizing block on alerts, FX callback precision fixed (5 decimals), brief memory updated. Committed in life-os; **push pending**.
+3. Data-source note: scanner fires on yfinance spot daily close (22:00 UTC); NSE futures track spot, settle INR, trade 9:00–17:00 IST → place at next session open. Alert says this.
+4. Re-point execution: NSE EUR/USD futures (1,000 EUR lot, ~₹2,700-3,300 margin) via Angel One currency segment — needs SmartAPI key
+5. **Paper trade through live pipeline** before any real capital (own hard rule — backtest SIG ≠ live edge)
+6. Then live. Capital note from live numbers: risk/lot ≈ ₹875 at current ATR → 1 lot ≈ 15% risk at ₹5-6k capital. 1%-risk sizing needs ~₹87k. Paper data will inform whether to take >2% risk per trade at current capital.
 
 ---
 

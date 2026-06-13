@@ -24,8 +24,8 @@ Incident docs live in `work/incidents/`. See `Incidents.base` for overview.
 - **[[CoinDCX Execution Layer]]** — One-tap BTC/USDT REST API trade placement. **Phase 1 client built + tested (TDD, 13 green) 2026-06-06.** Next: user generates API key → smoke test → Phase 2 Telegram wiring.
 - **[[Edge Generalization Sweep]]** — GCP-credit compute burst: does the breakout edge generalize (max-breadth, Hybrid methodology) + go-live shortlist. Design approved; build paused at design-review. See [[GCP Credits Strategy]].
 - **[[Trading Research Queue]]** — A1-A3 done, B1-B4 done. All research complete: build gaps filled, forex dead-ends closed, EUR/USD reopened.
-- **[[FEMA Forex Legality]]** — EUR/USD legality VERIFIED + GO. Legal via NSE futures. CA waived at current scale. Re-enablement path captured.
-- **[[Daily Watch Weekly Hunt]]** — strategy-discovery system: daily monitor the proven edge + weekly disciplined candidate vetting (lockbox + cross-instrument). Spec done via grill-me; build pending.
+- **[[FEMA Forex Legality]]** — EUR/USD legality VERIFIED + GO + **EXECUTED 2026-06-12**: scanner re-enabled, NSE sizing on alerts, brief memory fixed. Remaining: currency segment activation (user) → paper → live.
+- **[[Daily Watch Weekly Hunt]]** — strategy-discovery system: daily monitor the proven edge + weekly disciplined candidate vetting. **Lockbox + trial-count registry BUILT 2026-06-12** (TDD, 18 green, `D:\trading_system\hunt\`). Remaining: cross-instrument harness, Daily Watch brief format + cadence.
 
 ## Review Prep
 
