@@ -24,3 +24,5 @@
 ## [2026-06-13] research-toolkit | research on "Claude flow state: the workflow and technique for reaching deep flow when using Claude Code and AI coding agents - what 'flow state with Claude' means, concrete practices and setups power users recommend, and how a solo developer can adopt it" - saved to 2026-06-13 - claude flow state the workflow and technique for reaching deep flow when using c.md
 
 ## [2026-06-13] research-toolkit | finance pre-trade brief on "BTC/USD" - saved to 2026-06-13 - btcusd.md
+
+## [2026-06-14] research-toolkit | youtube on "How I Use Obsidian + Claude Code to Run My Life" - saved to 2026-06-14 - how i use obsidian claude code to run my life.md

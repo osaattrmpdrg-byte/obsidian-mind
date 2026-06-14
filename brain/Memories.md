@@ -10,6 +10,7 @@ tags:
 
 Persistent context and knowledge retained across sessions. Each topic lives in its own note — follow the links.
 
+- [[Working With Me]] — **read first, every session** — the standing operating agreement for how to engage with Dileep
 - [[Key Decisions]] — architectural and workflow decisions worth recalling
 - [[Patterns]] — recurring patterns and conventions discovered across work
 - [[Gotchas]] — things that have bitten before and will bite again
@@ -31,7 +32,7 @@ Persistent context and knowledge retained across sessions. Each topic lives in i
 - 2026-06-05: Obsidian MCP wired up — Local REST API plugin v4.1.3 with built-in MCP, configured in `.mcp.json`. Certificate trusted in Windows CA store. See [[Key Decisions]] → Vault & Tooling Infrastructure.
 - 2026-06-05: Trading research complete (A1-A3, B1-B4 via Perplexity Sonar). Key outcomes: Angel One SmartAPI chosen (free), position sizing rules set (1-2% at ₹5-6k), all forex pair expansion rejected, BTC golden cross is lagging confirmation, EMA50 short deferred. See [[Trading Research Queue]].
 - 2026-06-05: **EUR/USD reopened** — "FEMA grey area" was a misunderstanding. EUR/USD is legal via NSE exchange-traded futures (SEBI 2016 circular, verified). Offshore brokers are the illegal part, not the pair. Marked GO. See [[FEMA Forex Legality]].
-- 2026-06-05: Session capture now obsidian-mind-native — `/log-session` skill rewritten (writes `thinking/session-logs/`, updates Memories, routes to brain notes, no git auto-push), Stop hook points at it. See [[Key Decisions]] → Session Workflow.
+- 2026-06-05: Session capture now obsidian-mind-native — `/log-session` skill rewritten (writes `thinking/session-logs/`, updates Memories, routes to brain notes, no git auto-push), Stop hook poiyes nts at it. See [[Key Decisions]] → Session Workflow.
 - 2026-06-06: `/scout` audit (418 skills) + installed `indian-trading-skills` (10 NSE/F&O skills) and `skill-algotrader` (reference only). Added **CoinGecko MCP** to `.mcp.json` (free/keyless, activates on restart); rejected CoinDCX MCP. See [[Key Decisions]] → Vault & Tooling.
 - 2026-06-06: Designed [[Daily Watch Weekly Hunt]] via grill-me — daily monitor the proven edge + weekly disciplined candidate vetting (lockbox + cross-instrument + trial-count penalty). Killed the naive "daily strategy generator" as a curve-fitting machine.
 - 2026-06-06: Angel One **live** — login verified (`test_angel_login.py`), MCX (`mcx_fo`) + currency (`cde_fo`) segments both active. SmartAPI gotchas logged ([[Gotchas]]).

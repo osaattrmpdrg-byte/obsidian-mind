@@ -26,6 +26,7 @@ Incident docs live in `work/incidents/`. See `Incidents.base` for overview.
 - **[[Trading Research Queue]]** — A1-A3 done, B1-B4 done. All research complete: build gaps filled, forex dead-ends closed, EUR/USD reopened.
 - **[[FEMA Forex Legality]]** — EUR/USD legality VERIFIED + GO + **EXECUTED 2026-06-12**: scanner re-enabled, NSE sizing on alerts, brief memory fixed. Remaining: currency segment activation (user) → paper → live.
 - **[[Daily Watch Weekly Hunt]]** — strategy-discovery system: daily monitor the proven edge + weekly disciplined candidate vetting. **Lockbox + trial-count registry BUILT 2026-06-12** (TDD, 18 green, `D:\trading_system\hunt\`). Remaining: cross-instrument harness, Daily Watch brief format + cadence.
+- **[[Content Niche]]** — Stream 3 niche hypothesis (2026-06-14): AI-engineering build-in-public with the real-money trading system as proof (Framing C, "not trading-advice"). First artifact drafted ([[2026-06-13-lockbox-post-draft]]); 8-piece calendar. Blocked on: confirm the constraint revision → publish piece #1. Spawned from [[AI Tooling Workflow Patterns]] research.
 
 ## Review Prep
 

@@ -103,11 +103,12 @@ The `SessionStart` hook automatically injects rich context: vault file listing, 
 
 If doing it manually:
 
-1. Read `Home.md` -- vault entry point with embedded dashboards
-2. Read `brain/North Star.md` -- ground suggestions in current goals
-3. Check `work/Index.md` -- see active projects and recent notes
-4. Scan `brain/Memories.md` -- index of memory topics, then read relevant topic notes
-5. `obsidian tasks daily todo` -- see pending items
+1. **Read `brain/Working With Me.md` FIRST -- the standing operating agreement for how to engage with Dileep (every session, not once).**
+2. Read `Home.md` -- vault entry point with embedded dashboards
+3. Read `brain/North Star.md` -- ground suggestions in current goals
+4. Check `work/Index.md` -- see active projects and recent notes
+5. Scan `brain/Memories.md` -- index of memory topics, then read relevant topic notes
+6. `obsidian tasks daily todo` -- see pending items
 
 ### Ending a Substantial Session
 

@@ -1,4 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(defuddle:*)",
+      "Bash(obsidian status)",
+      "Bash(obsidian read:*)",
+      "Bash(obsidian search:*)",
+      "Bash(obsidian backlinks:*)",
+      "Bash(obsidian tags:*)",
+      "Bash(obsidian tasks:*)",
+      "Bash(obsidian orphans)"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {

@@ -18,16 +18,20 @@ Read by Claude at session start. Updated when signals are added, validated, or r
 
 | Pair | Direction | WR | Adj R | n | Status |
 |---|---|---|---|---|---|
-| EUR/USD | Long | 54.3% (20yr) / 67.7% (test) | +0.131R | 92 | SIG train+test — **SCANNER ACTIVE** (re-enabled 2026-06-12, NSE futures path, paper gate before live) |
+| EUR/USD | Long | 54.3% | +0.131R | 92 | SIG train+test — **REPRODUCED & RE-BLESSED 2026-06-14** (engine matches golden to the trade; live exit aligned). **SCANNER ACTIVE**, paper gate before live |
 | USD/CAD | Short | — | +0.054R | — | SIG train+test — **PERMANENTLY BLOCKED** (not on NSE cross-currency) |
-| XAU/USD | Long | 46.6% | +0.278R | 206 | SIG train+test — **ACTIVE** (scanner live) |
+| XAU/USD | Long | 41.7% (test) | +0.277R (test) | 152 | ⚠️ **FAILS GATE under validated exit (2026-06-14)** — test Wilson-lo **30.1% < 33.3%** (train passes at 38.9%). Edge positive but under-powered in test (n=60). **DOWNGRADE: scanner may watch, NO real capital** until test significance is earned |
 | BTC/USD | Long | 51.7% full / 40% test | +0.452R | 116 | SIG full, borderline test — **PAPER TRADING** |
 | ETH/USD | Long | 47.4% | +0.321R | 57 | NOT SIG in test — **PHASE 2, deferred** |
 
 **Minimum bar:** Wilson CI lower bound > 33.3% (break-even for 1:2 R:R) in BOTH train AND test. Not just positive expectancy.
 
-> [!warning] Live exit diverges from the validated exit (2026-06-13) — fix before live capital
-> EUR/USD +0.131R is **real** — saved in `results\breakout_trail5_portfolio.csv` (n=92, 54.3% WR), produced by a **pure 5-bar trailing stop, NO fixed TP** (winners ran to +5.36R). But the live `monitor_trades.py` exits SL > **TP(+2.0R)** > trail — the TP cap chops the right-tail winners and collapses the edge (reconstruction with TP = −0.278R). **XAU +0.278R has no saved artifact at all** — unverifiable until re-derived. The validation script is lost (`trading_system` isn't under git). See [[Gotchas#Backtest reproducibility & live-exit divergence]].
+> [!success] Reconciled 2026-06-14 — validated exit recovered, live monitor aligned
+> The lost exit was recovered and rebuilt as a tested engine (`backtest/trail_engine.py`, reproduces the golden EUR file **to the trade**): long-only, hard SL −1R, **5-bar trailing stop** (`min(low[j-5:j])`, excludes current bar, not reset at entry), fill at the **breach bar's close**, **no TP, no max-hold**. Findings:
+> - **EUR/USD +0.131R reproduced & re-blessed.**
+> - **XAU/USD FAILS the gate** under the validated exit — test-period Wilson-lo 30.1% < 33.3% (the old "+0.278R" was the test-window point estimate, never gate-checked). Positive but under-powered. Artifact now saved: `results/breakout_trail5_XAU.csv`.
+> - **Live monitor aligned** — `monitor_trades.py` had a +2R TP cap (deleted the right-tail winners; reconstruction with TP = −0.278R) **plus** a too-tight trail that reset at entry and exited at the trail level. Both fixed; live exit is now byte-identical to the engine. `trading_system` is now under git (branch `trailing-exit-reconciliation`).
+> See [[Gotchas#Backtest reproducibility & live-exit divergence]].
 
 ---
 

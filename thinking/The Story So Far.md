@@ -8,7 +8,7 @@ tags:
 
 # The Story So Far
 
-*A plain-English record of everything built across these sessions — for you to read top to bottom and know exactly where things stand. Last updated 2026-06-06.*
+*A plain-English record of everything built across these sessions — for you to read top to bottom and know exactly where things stand. Last updated 2026-06-14.*
 
 ---
 
@@ -61,6 +61,24 @@ This was the turning point. Several things happened:
 
 ---
 
+### June 12 — Both rails verified + the anti-self-deception machine
+- **Angel One re-verified live** (existing key works — no new key needed). **CoinDCX smoke test passed** and the account is funded; added limit-order support so you can run a zero-risk order→cancel test. Still pending *you*: place the unfillable test order, confirm it in the app, cancel it.
+- Built the **Lockbox + trial-count registry** — the part that stops the system fooling itself. It holds out a slice of history the strategy generator never sees, lets each candidate touch it once, and raises the pass bar as you test more ideas. This is the discipline most "AI trading" content skips entirely.
+- **EUR/USD re-enabled in the live scanner** (and fixed a real bug that was mangling FX prices in the alerts).
+
+### June 13-14 — Turning the lens on the tools (and a possible new stream)
+This stretch wasn't about trading — it was about the *tooling and the streams themselves*.
+- **Researched how people actually use Claude / OpenClaw / Obsidian / AI agents.** The standout finding: your vault already *out-tools* the creators teaching this — some of whom sell a "Content OS" setup for $197 that is *less* than what you already have.
+- That became a **content-niche hypothesis** (finally un-blocking Stream 3): build-in-public as *"I built the AI second-brain these creators teach — then pointed it at a live trading account with the risk discipline the hype skips."* Engineering, not trading-advice. First post drafted (the Lockbox story). Pending your OK on the "not trading-advice" framing.
+- Found a **billing reality**: from June 15, Claude splits into two pools — your interactive sessions (plenty, but unusable by overnight agents) and a separate ~$20/month autonomous budget on Pro. That killed the "overnight agent army" idea as unaffordable on Pro and pushed everything onto cheap/free rails.
+- Settled the **multiple-agents question** you raised: yes, more agents help — especially for *catching your own blind spots in decisions* (an adversarial panel), run live (≈free), not as an always-on swarm. A "decision gate" is queued to build.
+- Wrote a standing **"Working With Me"** note so any future session starts already knowing how you think — and wired the vault to read it every session.
+- Cleared tooling friction: installed `defuddle`, fixed the research + YouTube scripts, started a permission allowlist.
+
+You also flagged you're **considering something that could change your trajectory altogether** — not yet shared. It's logged so we pick it up.
+
+---
+
 ## The trading system, in plain words
 
 **The edge (the one rule that makes money):** Buy when the price breaks above its highest point of the last 20 days, *but only* when the market is already in a clear uptrend (a fast average above a slow average). Set a stop-loss at 1.5× the recent volatility. Ride the trend; exit when it turns.
@@ -98,11 +116,12 @@ This list is the real value — it's everything you *won't* waste time re-trying
 
 ---
 
-## Where you stand right now (2026-06-06)
+## Where you stand right now (2026-06-14)
 
-- The **broker is live** and both trading segments work.
-- The **plan is approved**: paper-test first.
-- The **next build** is clear and planned: make the "Paper" button actually record trades so they can be tracked.
+- **Trading:** both rails verified live; one manual CoinDCX test order still pending you. System unchanged and disciplined (Lockbox now guards new-strategy discovery).
+- **Content (Stream 3):** niche finally defined — pending your OK on the "not trading-advice" framing — with the first post drafted.
+- **Tooling:** faster and safer (defuddle installed, scripts fixed, permission allowlist, a standing "how to work with me" contract the vault reads every session).
+- **Open:** the possible trajectory change you're weighing (not yet shared), and the small CoinDCX test order.
 
 ### The approved plan of action
 
@@ -115,8 +134,6 @@ This list is the real value — it's everything you *won't* waste time re-trying
 
 ## Things only you can do (open reminders)
 
-- **June 6** — switch Claude Code to the `osaattrmpdrg@gmail.com` account (verify it's on the right plan tier first).
-- **June 10** — delete `C:\Xilinx` to free 52GB.
 - **Aug 28** — GCP billing audit before the **Sept 4** free-credit cliff (make sure nothing flips to paid).
 - Generate the **CoinDCX API key** when ready to wire up Bitcoin execution.
 - Open/confirm the **IDFC First Bank** account for isolated trading capital.
