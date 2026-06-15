@@ -12,8 +12,11 @@ tags:
 
 Read by Claude at session start. Updated when signals are added, validated, or rejected. Never modify proven signals without new backtest evidence.
 
-> [!danger] ACTION NEEDED — validated-exit fix is committed but NOT pushed (2026-06-15)
-> The corrected monitor (no +2R TP cap, validated 5-bar trail) is committed in **`/d/life-os`** as `2dd7aac`, **ahead of origin by 1 — unpushed**. **The live GitHub Actions monitor still runs the OLD buggy exit until you push.** To deploy: `cd /d/life-os && git push`. (The fix also lives in `D:\trading_system` on `master`, but that copy is not what Actions runs.) Claude: remind Dileep of this at session start until it's pushed.
+> [!danger] PENDING — carried to next session (2026-06-15). Claude: surface these at session start until each is done.
+> 1. **DEPLOY the validated-exit fix (not live yet).** Corrected monitor (no +2R TP cap, validated 5-bar trail filled at breach close) is committed in **`/d/life-os`** as `2dd7aac`, **ahead of origin by 1 — unpushed**. The live GitHub Actions monitor still runs the OLD buggy exit until pushed. Deploy: `cd /d/life-os && git push` (needs explicit OK — it's a production deploy of trade-exit logic; paper-phase blast radius only, execution still stubbed). The fix also lives in `D:\trading_system` on `master`, but Actions runs from life-os, not that copy.
+> 2. **SECURITY — revoke a leaked OAuth token.** A `gho_…` Git Credential Manager token printed to a log this session. Revoke: GitHub → Settings → Applications → Authorized OAuth Apps → **Git Credential Manager → Revoke**; next push re-auths fresh. (Account mismatch already fixed — GCM now authenticates as `osaattrmpdrg-byte`.)
+> 3. **VALIDATE before live capital** — breach-bar-close fill timing + SL-gap optimism. See [[Gotchas#Backtest reproducibility & live-exit divergence]].
+> 4. *(eventual)* collapse the two drifting copies (`D:\trading_system` ↔ `life-os/trading_system`) to one source of truth; give `D:\trading_system` a remote so the recovered engine has off-machine backup.
 
 ---
 
