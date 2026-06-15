@@ -12,6 +12,9 @@ tags:
 
 Read by Claude at session start. Updated when signals are added, validated, or rejected. Never modify proven signals without new backtest evidence.
 
+> [!danger] ACTION NEEDED — validated-exit fix is committed but NOT pushed (2026-06-15)
+> The corrected monitor (no +2R TP cap, validated 5-bar trail) is committed in **`/d/life-os`** as `2dd7aac`, **ahead of origin by 1 — unpushed**. **The live GitHub Actions monitor still runs the OLD buggy exit until you push.** To deploy: `cd /d/life-os && git push`. (The fix also lives in `D:\trading_system` on `master`, but that copy is not what Actions runs.) Claude: remind Dileep of this at session start until it's pushed.
+
 ---
 
 ## Proven Signals
