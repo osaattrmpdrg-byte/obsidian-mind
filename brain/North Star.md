@@ -13,6 +13,9 @@ aliases:
 
 Read by Claude at every session start. Every suggestion should be filtered through: *"Does this move the needle toward ₹7-8L passive by 27?"*
 
+> [!warning] Open trajectory fork (2026-06-15) — may reorder this entire goal
+> Dileep is **considering a life in the armed forces** — see [[Defence Career Strategy]]. This is a [[Vision]]-level decision that would deprioritize ₹7-8L-by-27 as the *primary* path (defence serves Vision's meaning/service/discipline half directly). **Not decided.** Until it is, this North Star stands and the filter applies — but hold it loosely. **⛔ Hard guardrail (Dileep, 2026-06-15): do NOT replace or rewrite this North Star with the defence path until Dileep *explicitly* says so — flag only, never promote.** Next step: a [[panel]] on the core "why defence" assumption + the eye exam.
+
 ## The Goal
 
 **₹7-8L/month passive income by age 27.**
@@ -76,6 +79,7 @@ Building a life where time is sovereign — not exchanged for salary, but used f
 |------|-------|--------|
 | 2026-06-05 | Populated North Star | Vault migration from life-os — first real goal capture |
 | 2026-06-05 | Execution = API-driven via Angel One SmartAPI; EUR/USD added to scope | Switched off Zerodha (₹2k/mo) to free Angel One API; EUR/USD verified legal via NSE futures. Smart/systematic investing through broker APIs, not manual. |
+| 2026-06-15 | **Trajectory fork opened (NOT resolved):** considering an armed-forces career | Shared a [[Defence Career Strategy]] doc + grilling session. Would reorder this goal toward [[Vision]]'s meaning/service half. Flagged, not decided — income path stands until then. |
 
 ## Related
 

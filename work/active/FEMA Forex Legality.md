@@ -19,6 +19,14 @@ quarter: Q2-2026
 > [!warning] Not legal advice
 > Regulatory structure is now `[VERIFIED]` from research. But your *personal* tax treatment, audit thresholds, and reporting still need a CA's read on your specific situation. Do not skip the CA — just walk in already knowing the legality answer.
 
+> [!tip] CAN we make EUR run? Vehicle = YES (EUR/INR), edge = marginal (2026-06-16)
+> "Make EUR/USD run" hunt. **The vehicle problem is solvable: trade EUR exposure via EUR/INR**, which is legal AND liquid — NSE near-month **EUR/INR = 2,799 lots/day, GBP/INR = 5,198, both 0 flat days** (vs EUR/USD-direct 92 lots, flat half the days; JPY/INR dead at 18). ~1-3 paise spread (~0.04R) fits the headroom.
+> **BUT the edge on EUR/INR is weak + fragile**, so the vehicle being fixed doesn't make it worth trading: EUR/INR breakout adjR full **+0.066** / recent 2021-26 **+0.140**, but **tail-fragile — drop the top 1 winner → +0.014, top 2 → NEGATIVE** (rests on ~1-2 trades of 124). GBP/INR weaker. Both confounded by ~3%/yr INR-depreciation drift. The 2-leg synthetic EUR/USD was **−0.126 (dead)**. Script: `D:\trading_system\validate_inr_vehicle.py`.
+> **Verdict:** *we can make it run, but shouldn't* — EUR/INR is a marginal, fragile, drift-confounded edge, not worth real capital next to **BTC's robust +1.686R** ([[Trading System#CRYPTO REVALIDATION]]). If ever pursued, EUR/INR must earn its OWN gate + drift control first (it does not inherit EUR/USD's numbers — it's a different, INR-blended edge).
+
+> [!failure] LEGAL ≠ LIQUID — the decisive correction (2026-06-16, `[VERIFIED]` from real Angel One data)
+> EUR/USD is legal on NSE, but the **NSE EUR/USD cross-currency future is effectively untradeable**: real Angel SmartAPI data shows the near-month (peak liquidity) trades **~92 lots/day with flat single-print OHLC on half the days**, diverging **11–36 pips from spot** — more than the edge's entire 21-pip slippage headroom. Control: **USD/INR = 312,614 lots/day** (~3,400× more). All NSE cross-currency futures (EUR/USD, USD/JPY, GBP/USD) are equally thin; only **USD/INR** has real depth. **So the FEMA "GO" was correct on legality but moot on tradeability — there is no liquid vehicle for the EUR/USD edge.** The only liquid+legal NSE FX future (USD/INR) has no *working* edge in the current regime. See [[Trading System#GATE 2b]]. Action: disable the EUR/USD scanner; this note's "execute" conclusion is superseded for EUR/USD.
+
 ---
 
 ## The Core Distinction (what most people get wrong)

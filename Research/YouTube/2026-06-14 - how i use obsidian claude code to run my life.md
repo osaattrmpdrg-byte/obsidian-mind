@@ -5,6 +5,7 @@ type: youtube
 video-id: 6MBq1paspVU
 video-url: "https://www.youtube.com/watch?v=6MBq1paspVU"
 title: How I Use Obsidian + Claude Code to Run My Life
+description: "Transcript-grounded summary of Vin's Obsidian + Claude Code 'thinking partner' workflow — vault as perfect memory, CLI exposes the graph, custom thinking commands. Source for AI Tooling Workflow Patterns."
 channel: Greg Isenberg
 channel-id: UCPjNBjflYl0-HQtUvOx0Ibw
 published: "2026-02-23T20:00:04Z"
@@ -58,3 +59,9 @@ This video explores advanced personal knowledge management, the application of l
 
 ## Comment Sentiment
 The comments express overwhelmingly positive sentiment, with many viewers praising Vin's clear explanation and the transformative nature
+
+## Related
+
+- [[AI Tooling Workflow Patterns|Tooling Patterns]] — the synthesis that deep-dives this video (Pattern set 2 — Vin's "thinking partner" system)
+- [[2026-06-13 - how developers and power users use claude code openclaw obsidian and ai agents t|Tooling dossier]] — the broader 8-source scan this fed into
+- [[Streams]] — content stream (Stream 3); the niche-edge mapping draws on this video

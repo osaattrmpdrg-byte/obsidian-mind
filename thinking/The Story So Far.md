@@ -75,7 +75,13 @@ This stretch wasn't about trading — it was about the *tooling and the streams 
 - Wrote a standing **"Working With Me"** note so any future session starts already knowing how you think — and wired the vault to read it every session.
 - Cleared tooling friction: installed `defuddle`, fixed the research + YouTube scripts, started a permission allowlist.
 
-You also flagged you're **considering something that could change your trajectory altogether** — not yet shared. It's logged so we pick it up.
+### June 15 — The trajectory fork: considering the armed forces
+The "something that could change your trajectory" — you shared it: **you're considering a life in the armed forces.** You'd already done a deep grilling session (14 Jun) and built a real [[Defence Career Strategy]] (now in the vault). The honest reconciliation against everything else here:
+- It's a **[[Vision]]-level decision**, not a career tweak — the ₹7-8L goal was always the *means* to the life in Vision; defence maxes one half of that life (meaning, discipline, service, nature) and sacrifices the other (autonomy, building your own thing, rootedness). That trade is the real question, and it's yours.
+- **Your financial work isn't wasted** — SSC has no pension, so the trading system + investing discipline become the *backbone* the path needs; and the *automated* trading system is the one income stream that survives a service life.
+- **The deepest untested assumption:** "why defence = tactical impact on people's lives" — asserted, not grilled, when the day-to-day is ~90% admin. Next session we run a panel on exactly that, and you get the eye exam done (the first gate).
+
+Status: **considering, not decided.** Nothing in the income plan was torn up — just flagged.
 
 ---
 
@@ -116,8 +122,9 @@ This list is the real value — it's everything you *won't* waste time re-trying
 
 ---
 
-## Where you stand right now (2026-06-14)
+## Where you stand right now (2026-06-15)
 
+- **⚡ Big open question:** whether to pursue an **armed-forces career** ([[Defence Career Strategy]]) — a Vision-level fork. Considering, not decided. Next: eye exam + a [[panel]] on the core motive.
 - **Trading:** both rails verified live; one manual CoinDCX test order still pending you. System unchanged and disciplined (Lockbox now guards new-strategy discovery).
 - **Content (Stream 3):** niche finally defined — pending your OK on the "not trading-advice" framing — with the first post drafted.
 - **Tooling:** faster and safer (defuddle installed, scripts fixed, permission allowlist, a standing "how to work with me" contract the vault reads every session).

@@ -58,3 +58,4 @@ The blocker this kills: *"Which instruments do we actually go live on — and is
 - [[What Didn't Work]] — overfitting traps this design is built to avoid
 - [[Streams]] — Stream 2 (Trading)
 - [[CoinDCX Execution Layer]] — where validated crypto instruments get executed
+- [[2026-06-06-research-intelligence-pipeline|Replay-grind seed]] — Thread 1 (accelerated historical replay) is the lighter-weight precursor to this compute sweep

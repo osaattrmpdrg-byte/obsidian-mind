@@ -1,0 +1,4 @@
+# Pin markdown to LF in the working tree so editor/tooling bytes match git's
+# stored form (LF, via core.autocrlf). Mixed CRLF/LF silently breaks exact-match
+# edits on notes. See brain/Patterns.md "Automation routing" session / git-flow.
+*.md text eol=lf

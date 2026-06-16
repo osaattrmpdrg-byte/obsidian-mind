@@ -17,7 +17,18 @@ The gap between paper trading and live capital. Without this, signals fire but n
 > [!info] API Cost
 > CoinDCX REST API is **free**. You need: KYC-verified CoinDCX account + API key from Settings → API dashboard.
 
+> [!tip] LIKELY FIX for the order-create 400 (2026-06-16) — use the native INR market, not the mirrored USDT one
+> Read-only diagnosis of `markets_details`: CoinDCX has **3 order books by `ecode`** — `I`=380 (CoinDCX-**native**, INR-quoted), `B`=354 (Binance-mirrored, USDT), `KC`=281 (KuCoin-mirrored). The pair that 400s is **`B-BTC_USDT` (mirrored)** — matching the standing hypothesis that **mirrored markets aren't REST-orderable** for this account. The untested path is **`I-BTC_INR` (native, `status:active`, supports limit+market)** — which is *also the correct India-legal, INR-settled pair* (no USDT stablecoin friction). The client already supports it: just call `place_spot_order("BTCINR", ...)` (line 199 uses `coindcx_name` from `get_market_details`). **This likely means NO support ticket is needed — just switch BTC routing from USDT to INR.**
+> - **Confirmation test (pending Dileep's OK — live order):** account INR balance is ~0, so a BUY can't be tested; the safe test is a **min-size (~$1) SELL limit on `BTCINR` priced ~2.5× above market** (non-filling) → if it returns an order id instead of 400, hypothesis confirmed → cancel immediately. Auth re-confirmed working 2026-06-16 (balances: BTC 0.00027, ETH 0.031, USDT 1.14, INR ~0).
+> - **If even the native INR order 400s:** then it's account-level API-trading activation → CoinDCX support (draft ticket below). See [[Trading System#CRYPTO REVALIDATION]] — **BTC is now the strongest edge in the system, so this 400 is the single blocker between the work and real money.**
+
 ---
+
+## Support Ticket — draft (use only if the native `I-BTC_INR` order ALSO 400s)
+
+> Subject: API order placement returns generic `400 Invalid request` despite Trading scope enabled
+>
+> Hi — my API key has Trading permission enabled and IP whitelisted. **Reads work** (balances, markets, market details all succeed via signed requests). But **every** `POST /exchange/v1/orders/create` returns a generic `400 Invalid request`, regardless of payload. I've ruled out: auth (reads use the same HMAC), trade permission, IP, market identifier (`BTCUSDT` accepted; `B-BTC_USDT` returns a *different* 422, proving the name parses), clock skew, number formatting, and price band. My request body is byte-identical to the `svamja/coindcx-python` reference library. **Is REST order placement enabled for my account, and are the Binance-mirrored (`B`-ecode) USDT markets REST-orderable for retail API, or only the native (`I`-ecode) INR markets?** Account ID / registered email: [fill in]. Thank you.
 
 ## Research Findings (2026-06-05)
 

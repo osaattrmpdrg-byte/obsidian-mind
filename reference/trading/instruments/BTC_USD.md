@@ -69,3 +69,4 @@ The golden cross (EMA50 > EMA200) is a **lagging confirmation, not a predictive 
 - [[Trading System]] — full system context
 - [[ETH_USD]] — Phase 2 instrument (correlated, deferred until BTC validates)
 - [[What Didn't Work]] — signals tested and rejected on BTC
+- [[2026-06-13 - btcusd|Pre-trade brief (2026-06-13)]] — dated Perplexity Finance snapshot (treat as stale; re-verify before acting)

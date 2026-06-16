@@ -132,6 +132,7 @@ Pattern → stream → effort × impact → verdict. North Star priority order (
 | Persistent *autonomous swarm infrastructure* (Claude Flow hive-mind / OpenClaw 24/7) | meta | high × ? | **skip on Pro** — $20 ceiling + overhead + Edge-Before-Action; the *standing infra*, not the *technique*. Revisit on Max. |
 
 ## Related
+- [[2026-06-14 - how i use obsidian claude code to run my life|Vin's video (raw note)]] — Pattern set 2 source transcript
 - [[2026-06-13 - how developers and power users use claude code openclaw obsidian and ai agents t|Source dossier]] — the 8-source scan this deep-dives
 - [[Tooling Intelligence Scan — Design]] — the automation this feeds
 - [[Streams]] — content stream (this resolves the "niche undefined" blocker)

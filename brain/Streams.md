@@ -14,6 +14,9 @@ tags:
 > [!tip] How Claude should use this
 > At session start, scan all four streams. Surface the one with the most actionable next step. Nudge toward small daily progress even when the main session focus is elsewhere.
 
+> [!warning] Open trajectory fork (2026-06-15)
+> Dileep is considering an **armed-forces career** ([[Defence Career Strategy]]) — a [[Vision]]-level decision that could reorder all four streams. If it proceeds, the **automated trading system is the one stream that survives a service life** (content + AgriTech don't), and the financial work becomes the no-pension backbone. Not decided — the streams below stand until it is.
+
 ---
 
 ## Stream 1 — Job (Stackbox)
