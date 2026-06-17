@@ -57,8 +57,16 @@ Read by Claude at session start. Updated when signals are added, validated, or r
 > - **Drift control (the skeptic's question — is it just being long BTC?):** NO. Through the **2022 bear (buy-and-hold −73%) the regime filter took 1 trade, −1.0R** — it sidestepped the crash. Regime-long only **44% of days**; flat the rest. The edge is timing, not passive exposure. (Caveat: naive holding still made +20,000% on BTC specifically; the system's value is **risk-adjusted** drawdown control + it's a generalizable rule.)
 > - **ETH/USD: +0.555 but NOT significant** (n=46) and tail-fragile (drop top-3 → negative). Secondary at best.
 > - **All three gates pass for BTC:** capturable (at-close, even cleaner 24/7), real edge (all-era, tail-robust), tradable vehicle (deep liquidity, real bars, legal in India). **The binding constraint is now ONLY execution — the CoinDCX order-create 400.** That single bug is the gate between this body of work and real money.
+> - **Execution update (2026-06-17):** live-tested the "switch to native INR market" fix — **DISPROVEN.** Native `BTCINR` (ecode I) 400s identically to mirrored `BTCUSDT` (ecode B) → the block is **market-independent = account-level (REST order placement not enabled).** Not fixable in code; **CoinDCX support ticket is ready to send** (see [[CoinDCX Execution Layer]]). Regime still NONE, so not time-critical — but it's the gate.
 > - **BTC regime is currently NONE** (EMA50 < EMA200) → no signal until it flips bullish. Use the wait to fix execution.
 > See [[CoinDCX Execution Layer]], [[Gotchas#Backtest reproducibility & live-exit divergence]].
+
+> [!note] BTC regime-flip watch-checklist (what historically precedes the EMA50>EMA200 golden cross)
+> Promoted from the 06-05 research dossier. The cross itself is **lagging** (confirms a move already underway) — these are the conditions that historically *precede* it, useful for anticipating the flip rather than reacting late. **Re-verify thresholds per cycle.**
+> - **On-chain:** MVRV recovering from <1 back toward its mean · NUPL moving capitulation → hope/optimism (not yet euphoria) · exchange netflows turning **negative** (accumulation, falling sell pressure).
+> - **Flow/macro:** institutional inflows rising (ETF AUM, CME OI) · easing macro liquidity (falling real yields / softer USD).
+> - **Cycle timing:** crosses cluster **~12–24 months after a halving-cycle bottom**, before the euphoric peak.
+> - Source: `Research/Web/2026-06-05 - what macro and on-chain conditions ... btc ema50 ...`.
 
 ---
 

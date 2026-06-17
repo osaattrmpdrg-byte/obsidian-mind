@@ -11,7 +11,9 @@ aliases:
 
 # North Star
 
-Read by Claude at every session start. Every suggestion should be filtered through: *"Does this move the needle toward ₹7-8L passive by 27?"*
+Read by Claude at every session start. Every suggestion should be filtered through two questions:
+1. *"Does this move the needle toward ₹7-8L passive by 27?"*
+2. *"What would have to be **all** true for this to make money — and which is currently false?"* — find the binding constraint and prove it first, instead of optimizing the part you're attached to. See [[Binding Constraint First]].
 
 > [!warning] Open trajectory fork (2026-06-15) — may reorder this entire goal
 > Dileep is **considering a life in the armed forces** — see [[Defence Career Strategy]]. This is a [[Vision]]-level decision that would deprioritize ₹7-8L-by-27 as the *primary* path (defence serves Vision's meaning/service/discipline half directly). **Not decided.** Until it is, this North Star stands and the filter applies — but hold it loosely. **⛔ Hard guardrail (Dileep, 2026-06-15): do NOT replace or rewrite this North Star with the defence path until Dileep *explicitly* says so — flag only, never promote.** Next step: a [[panel]] on the core "why defence" assumption + the eye exam.
@@ -33,9 +35,9 @@ This is not a vague aspiration. It requires:
 ## Current Focus (Q2 2026)
 
 Getting the trading system to its first live trade — execution is **API-driven and automated**, not manual clicking:
-1. **Angel One SmartAPI** (free) — programmatic order placement for MCX gold AND NSE EUR/USD futures. Account created → generate API key + activate currency & MCX segments.
-2. **EUR/USD reopened** — verified legal via NSE futures, marked GO. Cheapest instrument (~₹2,700/lot). See [[FEMA Forex Legality]].
-3. BTC regime flip → first BTC paper trade via [[CoinDCX Execution Layer]] (one-tap REST API)
+1. **Angel One SmartAPI** (free) — programmatic order placement for MCX gold. Account created → generate API key + activate MCX segment.
+2. ~~**EUR/USD reopened**~~ **KILLED 2026-06-16** — legal via NSE futures but the future is dead-illiquid (no tradable vehicle); validation shows the edge doesn't survive realistic fills anyway. Scanner to be disabled. See [[FEMA Forex Legality]].
+3. **BTC is the validated edge (+1.686R, all gates pass).** Binding constraint = the **CoinDCX order-create 400** ([[CoinDCX Execution Layer]]); regime currently NONE → fix execution while waiting for the flip.
 4. Research is API-backed too — Perplexity Sonar for strategy questions, cached in vault via `/trading-research`.
 
 **Approach:** smart/systematic investing through broker APIs (Angel One for India-legal instruments, CoinDCX for crypto) — the edge is validated by backtest, executed by code, gated by paper trading. Not discretionary.

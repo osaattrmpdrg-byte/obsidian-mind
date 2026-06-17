@@ -33,11 +33,15 @@ tags:
 ## Stream 2 — Trading (Systematic Swing)
 
 **Status:** System built, Telegram approval bot built, Angel One account created (2026-06-05). Zero live trades.
+**The validated edge is BTC (2026-06-16).** Full gate battery: BTC/USD **+1.686R**, positive in every era incl. the 2022 bear, tail-robust, real volume, legal+liquid. The single binding constraint between this and real money is the **CoinDCX order-create 400** ([[CoinDCX Execution Layer]]). BTC regime currently NONE (EMA50 < EMA200) → no live signal yet; use the wait to fix execution.
+
+**Execution status (2026-06-17):** the 400 is confirmed **account-level** — live-tested both the mirrored `BTCUSDT` and native `BTCINR` markets, both 400 identically, so it's not market-routing. **Not fixable in code → CoinDCX support ticket ready to send** (in [[CoinDCX Execution Layer]]). This is the one action that unblocks live BTC.
+
 **Active instruments:**
-- BTC/USD — regime NONE (EMA50 < EMA200). Scanner 00:30 UTC. Waiting for flip.
-- XAU/USD (MCX Gold) — scanner 22:30 UTC. No signals fired yet. Execution via Angel One SmartAPI.
-- EUR/USD — **GO** (legal via NSE futures, verified 2026-06-05). Cheapest instrument (~₹2,700/lot). **Scanner re-enabled 2026-06-12** with NSE sizing block on alerts (deploy = push life-os). Execution still pending Angel One currency segment. See [[FEMA Forex Legality]].
-**Disabled:** USD/CAD — not listed on NSE cross-currency, no India-legal route.
+- BTC/USD — the real edge (see above). Regime NONE, waiting for flip. Scanner 00:30 UTC.
+- XAU/USD (MCX Gold) — liquid+legal but **failed the edge gate**. No signals fired. Secondary at best.
+- EUR/USD — **KILLED (2026-06-16): legal but untradeable.** NSE EUR/USD future is dead-illiquid (~92 lots/day, spot divergence > edge headroom); EUR/INR vehicle exists but its edge is marginal/fragile. **Scanner disabled + deployed (2026-06-16, life-os `7176439`).** See [[FEMA Forex Legality]].
+**Disabled:** USD/CAD (no India-legal route) · EUR/USD (no liquid vehicle).
 **Execution layer:** Telegram approval bot built (`D:/trading_system/bot/`). Sends inline keyboard on signal. Runs two-layer pre-trade validation (circuit breakers → Perplexity). Angel One SmartAPI stub ready — fills when key arrives.
 **Broker for automation:** Angel One (free SmartAPI, better docs than Finvasia, ₹20/trade flat — beats KiteConnect at ₹2,000/month)
 **Cloud hosting:** Google Cloud Run — $300 credits expire 2026-09-04. Deploy at `asia-south1`.
