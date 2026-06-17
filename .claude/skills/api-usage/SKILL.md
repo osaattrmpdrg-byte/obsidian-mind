@@ -88,13 +88,25 @@ as a prompt to investigate, not a hard accusation. `--save` writes
 
 ---
 
-## Cost table (seed)
+## Cost table
 
-Edit `COST_TABLE` in `scripts/audit.py` as pricing changes.
+As of 2026-06-18, Perplexity calls (`research.py`, `research_deep.py`, `finance.py`)
+compute **real token-based cost** per call via `lib/perplexity.py`'s `PRICING` table
+and `estimate_cost()`, and log that real number to the ledger — not a flat guess.
+This matters: the old flat `$0.005/call` estimate undercounted actual spend by ~10x,
+because output tokens (not request count) drive Perplexity cost — `sonar-pro` output
+is $15/M tokens vs plain `sonar` at $1/M. See [[api-decision-framework]] — Cost
+Optimization Strategy — for the general rule this generalizes to any paid API.
 
-| Provider | Unit cost | Notes |
+`COST_TABLE` in `scripts/audit.py` is now a **fallback only**, used when a ledger
+entry has no real `est_cost_usd` attached (manual `audit.py record` calls, or
+legacy pre-fix rows).
+
+| Provider | Real cost source | Fallback (if missing) |
 |---|---|---|
-| Perplexity Sonar | ~$0.005 / query | paid |
+| Perplexity Sonar / Sonar-Pro | token usage × `PRICING` table in `lib/perplexity.py` | $0.005 |
+| Perplexity Finance Search | flat ~$0.005/invocation (not token-metered) | $0.005 |
+| Perplexity Deep (research-deep) | sum of 3 calls' real token cost | $0.02 |
 | Gemini | $0 | free tier |
 | YouTube Data API | $0 | free quota |
 | Grok | $0 (placeholder) | pending real pricing — [[grok-api-pending]] |

@@ -9,10 +9,17 @@ import json
 import os
 import re
 
-# Seed unit costs (USD per call). Edit as pricing changes.
+# FALLBACK ONLY — flat per-call estimate used when a ledger entry has no real
+# est_cost_usd attached. As of 2026-06-18 the research scripts (research.py,
+# research_deep.py, finance.py) compute and log REAL token-based cost via
+# lib/perplexity.py's PRICING table + estimate_cost(), since this flat table
+# undercounted actual spend by ~10x (output tokens, not request count, drive
+# Perplexity cost — see api-decision-framework.md). Only used for manually
+# recorded entries (`audit.py record` without --cost) or pre-fix legacy rows.
 # grok cost is pending — see [[grok-api-pending]]; treated as $0 until known.
 COST_TABLE = {
     "perplexity": 0.005,
+    "perplexity-deep": 0.02,
     "perplexity-finance": 0.005,  # Finance Search: ~$5 / 1000 invocations
     "gemini": 0.0,
     "youtube": 0.0,

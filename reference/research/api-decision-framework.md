@@ -111,3 +111,46 @@ Current status of each stream:
 - Trading: 4 queries queued (commodities/forex/F&O strategies + XAU specific)
 - AgriTech: 2 queries queued (run after trading is live)
 - Content: 1 query queued (run last)
+
+---
+
+## Cost Optimization Strategy (applies to ANY paid API — Perplexity, Grok, Gemini, future ones)
+
+> [!info] Why this exists
+> Audited 2026-06-18: real Perplexity spend was **$1.05/30 days**, but the vault's own
+> ledger estimated **~$0.05-0.07** for the same period — a ~15x undercount. Root cause:
+> every call defaulted to `sonar-pro` ($15/M output tokens) instead of plain `sonar`
+> ($1/M), `max_tokens` was left at a generous 4000-4500 ceiling that calls routinely
+> filled, and the cost ledger used a flat per-call guess instead of real token counts.
+> Fixed in `obsidian-second-brain/scripts/research/lib/perplexity.py` — see
+> [[Key Decisions]]. The four rules below are the generalized version: apply them to
+> any paid API integration, not just Perplexity.
+
+1. **Default to the cheapest model that meets the task's actual reasoning need.**
+   Premium/pro/reasoning tiers cost disproportionately more on *output* tokens, not
+   input — e.g. Perplexity `sonar-pro` is 15x `sonar`'s output rate for a model that's
+   usually only needed for genuine multi-hop synthesis (like `/research-deep`'s gap
+   analysis). Reserve the expensive tier for the specific phase that needs it; let
+   everything else use the base model. Don't let "better" be the default — make the
+   caller justify the upgrade.
+
+2. **Cap output tokens to the size of the actual answer, not the API's max.**
+   A generous `max_tokens` isn't free headroom — if calls are routinely filling it,
+   you're paying for length the question didn't need. Measure typical real output
+   size for a query type, then set the cap with a small buffer above that, not the
+   provider's ceiling. Structured-format prompts (fixed sections, "be concise") don't
+   need 4k+ tokens to stay complete.
+
+3. **Log real per-call cost from actual token usage, not a flat per-call guess.**
+   A flat estimate hides the real cost driver (which is almost always output tokens,
+   not request count) and silently undercounts spend until someone checks the
+   provider's own billing dashboard. Every paid-API client should return token counts
+   from the response and compute cost from the provider's real per-token pricing —
+   the ledger entry should carry that computed number, not a constant.
+
+4. **Reconcile the local ledger against the provider's real billing dashboard
+   periodically (monthly, or whenever spend feels off).** Drift between what the
+   ledger says and what the dashboard says is the signal that something is
+   silently miscosted — wrong model, a call site that bypassed logging entirely,
+   or a stale pricing table. This audit is what caught the 15x gap here; it isn't
+   a one-time fix, it's a recurring check.
