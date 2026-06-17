@@ -23,12 +23,13 @@ Incident docs live in `work/incidents/`. See `Incidents.base` for overview.
 - **Telegram Trading Bot** — Approval + validation + execution layer for XAU/USD live trading. Bot built (`D:/trading_system/bot/`). Angel One account created — next: SmartAPI key + segments, Perplexity key in trading .env, Cloud Run deploy. See [[Trading System]].
 - **[[CoinDCX Execution Layer]]** — One-tap BTC/USDT REST API trade placement. **Phase 1 client built + tested (TDD, 13 green) 2026-06-06.** Next: user generates API key → smoke test → Phase 2 Telegram wiring.
 - **[[Edge Generalization Sweep]]** — GCP-credit compute burst: does the breakout edge generalize (max-breadth, Hybrid methodology) + go-live shortlist. Design approved; build paused at design-review. See [[GCP Credits Strategy]].
-- **[[Trading Research Queue]]** — A1-A3 done, B1-B4 done. All research complete: build gaps filled, forex dead-ends closed, EUR/USD reopened.
-- **[[FEMA Forex Legality]]** — EUR/USD legality VERIFIED + GO + **EXECUTED 2026-06-12**: scanner re-enabled, NSE sizing on alerts, brief memory fixed. Remaining: currency segment activation (user) → paper → live.
+- **[[Trading Research Queue]]** — A1-A3 done, B1-B4 done. All research complete: build gaps filled, forex dead-ends closed, EUR/USD reopened then KILLED (illiquid, 2026-06-16).
+- **[[FEMA Forex Legality]]** — EUR/USD legal via NSE BUT **KILLED 2026-06-16**: NSE cross-currency future is dead-illiquid (~92 lots/day, spot divergence > 21-pip edge headroom). Scanner to be disabled. See [[Streams]].
 - **[[Daily Watch Weekly Hunt]]** — strategy-discovery system: daily monitor the proven edge + weekly disciplined candidate vetting. **Lockbox + trial-count registry BUILT 2026-06-12** (TDD, 18 green, `D:\trading_system\hunt\`). Remaining: cross-instrument harness, Daily Watch brief format + cadence.
 - **[[Defence Career Strategy]]** — ⚡ **major trajectory fork (2026-06-15):** considering an armed-forces career (NCC Special Entry / Navy SSC Exec / AFCAT Flying primary). [[Vision]]-level decision; the income path becomes the no-pension backbone if it proceeds. **Next: eye exam (first gate) + a [[panel]] on the "why defence" core assumption.** Status: considering, not resolved.
 - **[[Multi-LLM Orchestration]]** — 🅿️ **PARKED, ready (2026-06-16):** verified you already own ~85% (`/research-deep`, `/panel`, `/council`, subagents). Only two keepers: cross-*model* critic diversity + a cheap DeepSeek-V4 batch lane for agri-scenario planning. Edge-gated phased plan written; build on signal.
 - **[[Content Niche]]** — Stream 3 niche hypothesis (2026-06-14): AI-engineering build-in-public with the real-money trading system as proof (Framing C, "not trading-advice"). First artifact drafted ([[2026-06-13-lockbox-post-draft]]); 8-piece calendar. Blocked on: confirm the constraint revision → publish piece #1. Spawned from [[AI Tooling Workflow Patterns]] research.
+- **[[SUI Reverse-Engineer]]** — reverse-engineer a friend's SUI futures entries (2026-06-17/18). His full ledger = 76% win but **net-negative** (exit-artifact?). Built the Phase-1 blind harness (`D:\trading_system\sui_re\`, 15 tests green); blind set generated. **Next: Part 3 blind prediction + scoring.** First application of [[Reverse-Engineer Before Apply]].
 
 ## Review Prep
 
@@ -77,6 +78,8 @@ Incident docs live in `work/incidents/`. See `Incidents.base` for overview.
 | 2026-06-06 | Edge Generalization Sweep — Hybrid methodology, max-breadth, correlation-aware | Accepted | [[Edge Generalization Sweep]] |
 | 2026-06-05 | "Daily Watch, Weekly Hunt" over a daily strategy generator (anti curve-fitting) | Accepted | [[Daily Watch Weekly Hunt]] |
 | 2026-06-05 | CoinGecko MCP added; CoinDCX MCP rejected (duplicates self-built client) | Accepted | [[Daily Watch Weekly Hunt]] |
+| 2026-06-17 | Reverse-Engineer Before Apply — all externally-sourced strategies are hypotheses until reverse-engineered + validated | Accepted | [[Reverse-Engineer Before Apply]] |
+| 2026-06-17 | VWAP + volume-S/R strategy REJECTED — no edge on BTC/stocks/currencies, fails OOS | Accepted | [[What Didn't Work]] |
 
 ## Open Questions
 

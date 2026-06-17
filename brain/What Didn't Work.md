@@ -77,6 +77,20 @@ Read this before proposing any new signal, strategy, or architecture. Each entry
 - **Why:** Can't backtest "where price might bounce at Fibonacci level" without curve-fitting. Fails Phase 1 deterministic rule.
 - **Implies:** No subjective TA. Everything must be rule-based, deterministic, and backtestable.
 
+### VWAP + Volume-S/R (BTC daily) (2026-06-17)
+- **What:** Dileep's pasted multi-timeframe idea, made deterministic and tested as an ablation ladder on BTC/USD daily (4,000 bars). Rolling/anchored VWAP + volume-confirmed swing-pivot S/R; long above-VWAP-near-support, short below-VWAP-near-resistance, TP at the opposing band, SL 1.5×ATR. Script: `D:\trading_system\validate_vwap_sr.py`. Spec: `docs/superpowers/specs/2026-06-16-vwap-sr-backtest-design.md`.
+- **Result:** REJECTED — no edge survives the gates.
+  - **TP@band:** FULL adjR −0.05 (rolling) / −0.07 (anchored); **holdout negative** (−0.24 / −0.30). Long-only positive point estimate (+0.21 / +0.08) but **never significant** (Wilson-lo < break-even WR) and **entirely tail-dependent** — drop the single best winner → negative. Short side consistently negative (−0.27 / −0.20), matching BTC's long bias.
+  - **Relic only:** the one strongly-positive era is 2015–2017 (n=7, +2.09R) — early illiquid BTC. 2018-onward is negative every era.
+  - **Exit:** 5-bar trailing beats TP@band (FULL +0.02, holdout +0.19) — re-confirms "fixed TP hurts" — but still not significant and still tail-fragile (drop top-1 → negative).
+  - **Two layers fire zero trades on daily bars:** the "5× average volume" entry filter (spike never coincides with the setup) and the Donchian-channel floor (never near support while above VWAP).
+- **Why:** Buying dips-to-support inside an uptrend on BTC daily has no positive expectancy once the early illiquid era is excluded; the apparent edge is one or two fat-tail winners and it vanishes out-of-sample.
+- **Implies:** (1) This discretionary VWAP+S/R logic does **not** beat the existing breakout edge ([[Trading System]]: BTC +1.686R, sig, tail-robust, positive every era). (2) **6× leverage on a ≤0R/trade expectancy just blows the account faster** — leverage scales R, not edge. (3) The deferred 2hr / leverage / CME-gap / ETF-flow layers don't warrant the data cost when the daily core already fails OOS. The breakout system stays the only validated BTC edge.
+- **Cross-asset extension (stocks + currency, 2026-06-17):** Re-ran the core (rolling VWAP + volume pivots) on 6 liquid US stocks (SPY, AAPL, MSFT, NVDA, AMZN, TSLA) and 6 currency vehicles (UUP, FXE, FXB, FXY, FXA; FX *spot* excluded — 0 volume; `DX=F` delisted). **Same verdict — no validated edge.**
+  - **Currencies:** pooled **negative on every config** (TP and trailing, full and long-only). Flat no.
+  - **Stocks:** pooled negative except *long-only + trailing* at **+0.08R (n=303, raw-SIG)** — but it's (a) marginal, (b) dies under the trial-count penalty (~50+ comparisons run across BTC/stocks/FX → Šidák needs z≈3.3, which +0.08R can't reach), (c) contradicted by holdouts: **AAPL looks SIG in-sample (+0.46R long) then FAILS its 30% holdout (−0.05R)** — the textbook overfit illusion.
+  - **The tell:** the only ever-least-bad config is *long-only + trailing exit* — i.e. plain trend-following. The VWAP+S/R entry **adds nothing** over the breakout/trailing edge already validated. Across crypto, equities, and currencies, this strategy has no independent signal.
+
 ---
 
 ## Architecture Decisions — Rejected
