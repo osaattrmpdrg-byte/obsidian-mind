@@ -6,6 +6,8 @@ tags:
   - trading
 status: active
 quarter: Q2-2026
+next_step: "Push life-os commits to origin/main when ready to deploy (3 commits: 9af559b, f84a03d, 1ca3354)"
+due: "2026-07-07"
 ---
 
 # CoinDCX Execution Layer
@@ -25,6 +27,64 @@ The gap between paper trading and live capital. Without this, signals fire but n
 > - See [[Trading System#CRYPTO REVALIDATION]] — **BTC is the strongest edge in the system, so this 400 is the single blocker between the work and real money.** Now confirmed CoinDCX-account-side, not fixable in code.
 
 ---
+
+## Re-KYC hypothesis — RULED OUT (2026-06-29)
+
+Checked the My Profile page directly: KYC Verification ✓, Bank Details ✓, Deposit INR ✓, Complete first trade ✓ — all green, no Re-KYC banner, no restriction flag anywhere. Account is fully verified. The pending-Re-KYC hypothesis (raised 2026-06-22) does not explain the 400.
+
+## Escalation plan (2026-06-29, support silent 12 days since 2026-06-17 ticket) — working one step at a time
+
+1. ~~Re-KYC check~~ — **RULED OUT** above.
+2. Open `coindcx.com/api/help/Error Codes and Resolution/` directly in browser (blocks automated fetch, 403) — check for a documented meaning of generic order-create 400 or an account-level activation step.
+3. Escalate off the dead email channel — CoinDCX Telegram (t.me/coindcx) or public X/Twitter post; exchanges respond faster to public technical posts than a stalled support inbox.
+4. Run a known-working reference library (`svamja/coindcx-python` or `tapanmeena/CoinDCX-API-calls`) directly against the real `.env` keys, not just byte-matching the payload by inspection — stronger proof to attach to an escalated ticket.
+
+GitHub `coindcx-official/rest-api` checked — pure documentation PRs, no community bug-report value, ruled out as a channel.
+
+**Docs error-code section — found (via screenshot, user's browser; WebFetch was 403-blocked the whole time). CLOSES this research thread.**
+
+| Code | Description | CoinDCX's documented causes | Resolution |
+|---|---|---|---|
+| 400 | Bad Request | Invalid URL **or** temporary server error — only these two | Check the URL, or retry after a few minutes |
+
+CoinDCX's own public taxonomy has **no account-permission category for 400 at all.** Combined with what's already proven:
+- Not a URL problem — the differential test (`BTCUSDT` parses and reaches a different error path than the malformed `B-BTC_USDT`) already proved the endpoint/market identifier is read correctly.
+- Not "temporary" — persisted across many test attempts over 12+ days; a transient server blip would have cleared by chance by now.
+
+**Conclusion: the error falls outside CoinDCX's documented categories entirely.** Nothing left to self-diagnose from their docs or error taxonomy — confirms escalation to a human on their side is the only remaining path, not further self-service troubleshooting. Docs-research thread closed.
+
+Also ruled out: API key creation date (key generated in 2026, well after the Aug 2024 cutoff mentioned for a different endpoint) — not the cause.
+
+## ROOT CAUSE FOUND AND FIXED (2026-07-01)
+
+**The 400 was never an account-level block.** Root cause: `place_spot_order` validated against `min_quantity` only but `markets_details` also exposes `min_notional` (e.g. `5` on BTCUSDT = $5 minimum order *value*). A quantity-valid, value-too-small order passed local validation silently and hit CoinDCX's server, which returned a generic 400 — misread for 12+ days as "REST API trading not enabled for this account."
+
+**Confirmed live (2026-07-01):**
+- Reference library (`tapanmeena/CoinDCX-API-calls`) → HTTP 200, order id `658000418` (BTCINR) — proved the account works
+- Our own existing client → HTTP 200, order id `662742175` (BTCINR), then `662750758` (BTCUSDT) once sized above $5 notional
+- Too-small order (min_quantity = 0.00001 BTC, $0.58 notional) → `400 "Order value should be greater than 5 USDT"` — the *real* error, finally specific
+
+**Fix committed:** `D:\life-os` commit `9af559b` — added `BelowMinNotionalError`, raised locally before any network call when `qty × price_per_unit < min_notional` on limit orders. 21/21 tests pass. No push yet (per git-flow rule: push only with explicit OK).
+
+**Status: UNBLOCKED.** Support ticket (`2026-06-17`) can be closed — no longer needed.
+
+## Phase 2 — Automated SL/TP Bracket (2026-07-01)
+
+**Built and panel-reviewed.** After a live entry:
+- `stop_limit` SL at `entry - ATR` (trigger, limit 0.1% below)
+- `take_profit` TP at `entry + 2×ATR` (trigger, limit 0.1% below)
+- Both order IDs stored in `paper_trades.json`
+
+`monitor_trades.py` now polls `get_active_orders()` at run start — if SL/TP order absent from active set, that's the intraday fill (ground truth). yfinance bar replay only runs as max_hold backstop. `manage_live_exit()` cancels surviving order on SL/TP hit; cancels both + market SELL on max_hold.
+
+**Panel (2026-07-01) — 3 fatal issues all fixed before shipping:**
+1. `take_profit_limit` does not exist on CoinDCX. Valid types: `[limit_order, market_order, stop_limit, take_profit, stop_limit_market, take_profit_market]`. Fixed to `take_profit`. Live confirmed: order `676418198`.
+2. Orphaned SL when TP fails — `place_sl_tp_orders()` now internally cancels SL before re-raising if TP placement fails.
+3. yfinance blind to intraday fills (fatal) — replaced with CoinDCX order polling.
+
+**Also confirmed live:** no balance lock — dual full-qty sell orders (TP + SL for same qty) accepted simultaneously. Orders `676418198` + `676418222`, both cancelled cleanly.
+
+38/38 tests pass. 3 commits in `life-os` (`9af559b`, `f84a03d`, `1ca3354`), no push yet.
 
 ## Support Ticket — SENT (2026-06-17, drajg39@gmail.com → support@coindcx.com)
 

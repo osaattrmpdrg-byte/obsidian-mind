@@ -24,6 +24,17 @@ Cross-validated across four independent practitioners (Max Mitcham, Vin, Sajal S
 
 (security pattern from Context Studios) Broad-permission agents (shell/browser) can touch files unintentionally; third-party skills/MCP servers are a supply-chain risk ("a malicious skill could contain harmful tool definitions"). **Vet skills before installing; use tool + user allowlists; never give an agent the money path unsupervised.** Reinforces the [[Claude Subscription Billing|cloud-sandbox-gets-research-keys-only]] boundary.
 
+## PM task auto-sync via domain tags (2026-07-01)
+
+Every `work/active/` note auto-gets a PM task on the Stop hook — no manual step. The tag decides the project:
+- `#trading` → `Projects/Trading_tasks/`
+- `#defence` → `Projects/Defence_tasks/`
+- `#content` → `Projects/Content_tasks/`
+- `#tooling` → `Projects/Tooling_tasks/`
+- *(none)* → `Projects/Miscellaneous_tasks/` (prints warning)
+
+Due date: note's `due:` field if set, else `date: + 7 days`. Tasks due ≤3 days are mirrored to `Immediate Attention`. Script: `scripts/sync_pm_tasks.py`. **Rule: if a new note goes to Miscellaneous, add the right domain tag immediately.**
+
 ## Git flow — SETTLED, do not re-litigate (2026-06-16)
 
 Dileep's explicit instruction: the git flow across the three repos is **fixed — stop proposing changes to it each session.** Claude follows it silently; never reconfigure, never re-pitch.
@@ -34,6 +45,20 @@ Dileep's explicit instruction: the git flow across the three repos is **fixed �
 - **Never read `.env` files** in any repo — secrets live there. Verify commit health with local `git log` only (no auth, no credential exposure). A `gho_…` token leaked to a log once ([[Gotchas]]) — that class of mistake is why this rule is hard.
 
 **Why:** repeatedly re-deciding the git setup wastes the session and risks touching credentials. It works; leave it.
+
+## Panel → fix loop before shipping money-path code (2026-07-01)
+
+First money-path panel applied to Phase 2 execution code. Sequence that worked:
+
+1. **Build** Phase 2 (SL/TP automation, 31 tests green)
+2. **Panel** immediately — 3 lenses before touching origin/main (0 proceed / 2 revise / 1 kill)
+3. **Live-test every unverified assumption** — `take_profit_limit` live test took 2 minutes and caught a fatal wrong-type bug. Never assume an order type works from docs alone.
+4. **Fix all fatal issues** before committing the panel-reviewed version — 3 commits, not 1 with known holes
+5. **Re-run tests** to 38/38 before mirroring
+
+The panel found 3 fatals that tests didn't: (1) wrong order type (unverifiable offline), (2) intraday fill blindness (architectural, not unit-testable), (3) orphaned SL on TP failure (code gap in caller). Tests prove the happy path; the panel probes the death paths. Both are required for money-path code.
+
+**Rule:** for any `LIVE_TRADING=1`-gated code, `/panel` before the first push, fix all `kill`/fatal items, then push. See [[CoinDCX Execution Layer]].
 
 ## Queued — money-path adopt (C3, supervised only)
 
