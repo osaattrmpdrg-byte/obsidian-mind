@@ -1,4 +1,7 @@
 [
   "obsidian-local-rest-api",
-  "templater-obsidian"
+  "templater-obsidian",
+  "obsidian-kanban",
+  "project-manager",
+  "calendar"
 ]
