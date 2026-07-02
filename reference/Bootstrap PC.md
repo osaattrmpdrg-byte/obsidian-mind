@@ -83,7 +83,7 @@ New-Item -ItemType Directory -Force D:\trading_system
 ## Step 2 — Clone All Repos
 
 ```powershell
-# Vault (public)
+# Vault (public) — includes all Obsidian plugin files pre-committed
 git clone https://github.com/osaattrmpdrg-byte/obsidian-mind.git D:\projectsobsidian-mind
 
 # Life-OS / crypto trading (public)
@@ -92,6 +92,12 @@ git clone https://github.com/osaattrmpdrg-byte/life-os.git D:\life-os
 # Trading system (PRIVATE — will prompt for GitHub username + PAT)
 git clone https://github.com/osaattrmpdrg-byte/trading-system.git D:\trading_system
 ```
+
+> [!note] Already cloned?
+> If you cloned the vault earlier and it's missing `.obsidian/` files, just pull the latest:
+> ```powershell
+> cd D:\projectsobsidian-mind; git pull origin main
+> ```
 
 ---
 
@@ -283,15 +289,20 @@ pip install requests yfinance python-dotenv
 
 ## Step 6 — Set Up Obsidian
 
-1. Open Obsidian
-2. Click **Open folder as vault** → select `D:\projectsobsidian-mind`
-3. Obsidian will detect community plugins → click **Trust and enable plugins**
-4. Go to **Settings → Community Plugins → obsidian-git → Options**:
+All plugin files (obsidian-git, templater, kanban, calendar, project-manager) are already in the cloned vault — Obsidian does not need to download anything.
+
+Two manual clicks required (cannot be scripted — Obsidian security):
+
+1. Open Obsidian → **Open folder as vault** → select `D:\projectsobsidian-mind`
+2. Click **"Trust author and enable plugins"** when prompted
+
+Then configure obsidian-git:
+3. Settings → Community Plugins → obsidian-git → Options:
    - Pull on startup: **ON**
    - Vault backup interval: **10 minutes**
-   - Authenticate with GitHub when prompted (use the same PAT from Step 2)
+   - Under "Authentication/commit author" → paste your GitHub PAT when prompted
 
-From this point the vault auto-syncs. All notes, brain files, thinking scratchpads, and decisions sync automatically.
+From this point the vault auto-syncs every 10 minutes. All notes, brain files, thinking scratchpads, and decisions sync automatically between laptop and PC.
 
 ---
 
